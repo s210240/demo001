@@ -10,18 +10,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ChatMessageWasReceived
+use Illuminate\Support\Facades\Log;
+
+class ChatMessageWasReceived  implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $chatMessage;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($chatMessage, $user)
     {
-        //
+        $this->chatMessage = $chatMessage;
+        $this->user = $user;
     }
 
     /**
@@ -31,6 +37,7 @@ class ChatMessageWasReceived
      */
     public function broadcastOn()
     {
+        Log::info('ff1');
         return new PrivateChannel('chat-room.1');
     }
 }
