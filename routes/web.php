@@ -16,3 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('hungry', 'CommonController@hungry');
+Route::post('add_pet', 'CommonController@addPet');
+Route::get('list_pets', 'CommonController@ListPets');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
