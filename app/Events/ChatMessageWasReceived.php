@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 use Illuminate\Support\Facades\Log;
 
-class ChatMessageWasReceived  implements ShouldBroadcast
+class ChatMessageWasReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -37,7 +37,11 @@ class ChatMessageWasReceived  implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        Log::info('ff1');
-        return new PrivateChannel('chat-room.1');
+        return new PrivateChannel('order.' . $this->user);
+    }
+
+    public function broadcastAs()
+    {
+        return 'server.created';
     }
 }
