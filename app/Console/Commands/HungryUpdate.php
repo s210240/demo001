@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\PetsModel;
 use App\Events\UpdatePets;
+use App\User;
 
 class HungryUpdate extends Command
 {
@@ -51,8 +52,10 @@ class HungryUpdate extends Command
             }
         }
 
-        $new_pets = PetsModel::all();
-
-        event(new UpdatePets($new_pets, $pet->id_user));
+        $users = User::all();
+        foreach ($users as $user) {
+            $pets = PetsModel::select(['id', 'pet_type', 'hunger', 'sleep', 'care'])->where('id_user', $user->id)->get();
+            event(new UpdatePets($pets->toJson(JSON_PRETTY_PRINT), $user->id));
+        }
     }
 }
