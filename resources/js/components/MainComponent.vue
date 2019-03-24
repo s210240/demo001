@@ -15,7 +15,36 @@
                         <button class="btn btn-primary" v-on:click="addPet(1)">Add pet</button>
                         <p></p>
                         <h4>List pets</h4>
-                        <p v-for="item in items" :key="item.id">{{ item.pet_type }}</p>
+                        <table id="firstTable" class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Hunger</th>
+                                <th>Sleep</th>
+                                <th>Care</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in items">
+
+                                <td>{{item.id}}</td>
+                                <td>{{item.pet_type}}</td>
+                                <td>
+                                    <button class="btn btn-primary" v-on:click="updatePet(item.id, 1)">{{item.hunger}}
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" v-on:click="updatePet(item.id, 2)"> {{item.sleep}}
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" v-on:click="updatePet(item.id, 3)">{{item.care}}
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -36,14 +65,20 @@
         mounted() {
             Echo.private(`pets.1`)
                 .listen('.server.created', (e) => {
-                    console.log(e);
+                    console.log(e.data);
                 });
 
             axios.get('list_pets')
-                .then(response => (this.items = response.data))
+                .then(resp => (this.items = resp.data))
+                /*.then(function (resp) {
+                    resp => (this.items = resp.data);
+                    console.log(resp.data);
+                })*/
                 .catch(function (resp) {
                     console.log(resp);
                 });
+
+            console.log(this.items);
         },
         methods: {
             addPet() {
@@ -59,6 +94,9 @@
                         console.log(resp);
                         alert("Pet already present!");
                     });
+            },
+            updatePet(id_user, type_pet) {
+                console.log(type_pet);
             }
         }
     }

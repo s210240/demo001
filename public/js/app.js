@@ -1788,6 +1788,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MainComponent",
   data: function data() {
@@ -1802,13 +1831,19 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     Echo.private("pets.1").listen('.server.created', function (e) {
-      console.log(e);
+      console.log(e.data);
     });
-    axios.get('list_pets').then(function (response) {
-      return _this.items = response.data;
-    }).catch(function (resp) {
+    axios.get('list_pets').then(function (resp) {
+      return _this.items = resp.data;
+    })
+    /*.then(function (resp) {
+        resp => (this.items = resp.data);
+        console.log(resp.data);
+    })*/
+    .catch(function (resp) {
       console.log(resp);
     });
+    console.log(this.items);
   },
   methods: {
     addPet: function addPet() {
@@ -1822,6 +1857,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(resp);
         alert("Pet already present!");
       });
+    },
+    updatePet: function updatePet(id_user, type_pet) {
+      console.log(type_pet);
     }
   }
 });
@@ -47025,94 +47063,179 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Tomagochi")]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selected,
-                      expression: "selected"
-                    }
-                  ],
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.selected = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
                   }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { selected: "" },
-                      domProps: { value: { name: "dog" } }
-                    },
-                    [_vm._v("Dog")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { domProps: { value: { name: "cat" } } }, [
-                    _vm._v("Cat")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { domProps: { value: { name: "raccoon" } } }, [
-                    _vm._v("Raccoon")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { domProps: { value: { name: "penguin" } } }, [
-                    _vm._v("Penguin")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p"),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function($event) {
-                      return _vm.addPet(1)
-                    }
+                ],
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
                   }
-                },
-                [_vm._v("Add pet")]
-              ),
-              _vm._v(" "),
-              _c("p"),
-              _vm._v(" "),
-              _c("h4", [_vm._v("List pets")]),
-              _vm._v(" "),
-              _vm._l(_vm.items, function(item) {
-                return _c("p", { key: item.id }, [
-                  _vm._v(_vm._s(item.pet_type))
+                }
+              },
+              [
+                _c(
+                  "option",
+                  {
+                    attrs: { selected: "" },
+                    domProps: { value: { name: "dog" } }
+                  },
+                  [_vm._v("Dog")]
+                ),
+                _vm._v(" "),
+                _c("option", { domProps: { value: { name: "cat" } } }, [
+                  _vm._v("Cat")
+                ]),
+                _vm._v(" "),
+                _c("option", { domProps: { value: { name: "raccoon" } } }, [
+                  _vm._v("Raccoon")
+                ]),
+                _vm._v(" "),
+                _c("option", { domProps: { value: { name: "penguin" } } }, [
+                  _vm._v("Penguin")
                 ])
-              })
-            ],
-            2
-          )
+              ]
+            ),
+            _vm._v(" "),
+            _c("p"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.addPet(1)
+                  }
+                }
+              },
+              [_vm._v("Add pet")]
+            ),
+            _vm._v(" "),
+            _c("p"),
+            _vm._v(" "),
+            _c("h4", [_vm._v("List pets")]),
+            _vm._v(" "),
+            _c("table", { staticClass: "table", attrs: { id: "firstTable" } }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.items, function(item) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(item.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.pet_type))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.updatePet(item.id, 1)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(item.hunger) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.updatePet(item.id, 2)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            " " +
+                              _vm._s(item.sleep) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.updatePet(item.id, 3)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(item.care) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Hunger")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Sleep")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Care")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
