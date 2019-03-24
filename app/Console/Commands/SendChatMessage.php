@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\UpdatePets;
 use Illuminate\Console\Command;
 use App\Events\ChatMessageWasReceived;
 use Illuminate\Support\Facades\Log;
@@ -40,7 +41,6 @@ class SendChatMessage extends Command
     public function handle()
     {
         Log::info('Terminal');
-        event(new ChatMessageWasReceived("Test message", 1));
-        echo 'sdds';
+        event(new UpdatePets("Test message", 1));
     }
 }
