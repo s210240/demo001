@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\PetsModel;
+use App\Events\UpdatePets;
 
 class HungryUpdate extends Command
 {
@@ -49,5 +50,9 @@ class HungryUpdate extends Command
                 PetsModel::where('id', $pet->id)->update(['die' => 0]);
             }
         }
+
+        $new_pets = PetsModel::all();
+
+        event(new UpdatePets($new_pets, $pet->id_user));
     }
 }
