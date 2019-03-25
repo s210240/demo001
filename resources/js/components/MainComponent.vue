@@ -107,6 +107,12 @@
                     .catch(function (resp) {
                         console.log(resp);
                     });
+
+                axios.get('list_pets')
+                    .then(resp => (this.items = resp.data))
+                    .catch(function (resp) {
+                        console.log(resp);
+                    });
             }
         }
     }
