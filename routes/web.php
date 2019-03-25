@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('hungry', 'CommonController@hungry');
 Route::post('add_pet', 'CommonController@addPet');
+Route::post('update_pet', 'CommonController@UpdatePet');
 Route::get('list_pets', 'CommonController@ListPets');
 
 Auth::routes();
