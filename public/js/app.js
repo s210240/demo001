@@ -1860,11 +1860,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updatePet: function updatePet(id_pet, pet_action) {
+      var _this3 = this;
+
       axios.post('update_pet', {
         id_pet: id_pet,
         pet_action: pet_action
       }).then(function (resp) {
         console.log(resp);
+      }).catch(function (resp) {
+        console.log(resp);
+      });
+      axios.get('list_pets').then(function (resp) {
+        return _this3.items = resp.data;
       }).catch(function (resp) {
         console.log(resp);
       });
