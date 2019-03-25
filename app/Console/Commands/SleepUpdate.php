@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use App\PetsModel;
 use App\ServiceClass;
 
-class HungryUpdate extends Command
+class SleepUpdate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:hungry_update';
+    protected $signature = 'command:sleep_update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update hungry';
+    protected $description = 'Sleep update';
 
     /**
      * Create a new command instance.
@@ -39,11 +39,11 @@ class HungryUpdate extends Command
      */
     public function handle()
     {
-        $pets = PetsModel::where('die', 0)->where('hunger', '>', 4)->get();
+        $pets = PetsModel::where('die', 0)->where('sleep', '>', 4)->get();
 
         foreach ($pets as $pet) {
-            $hunger = $pet->hunger;
-            PetsModel::where('id', $pet->id)->update(['hunger' => $hunger - 1]);
+            $sleep = $pet->sleep;
+            PetsModel::where('id', $pet->id)->update(['sleep' => $sleep - 1]);
         }
 
         $service = new ServiceClass();

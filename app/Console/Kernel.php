@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\CareUpdate::class,
+        \App\Console\Commands\SleepUpdate::class,
+        \App\Console\Commands\SleepFastUpdate::class,
+        \App\Console\Commands\HungryUpdate::class,
+        \App\Console\Commands\HungryFastUpdate::class
     ];
 
     /**
@@ -24,8 +28,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('command:hungry_update')->everyTenMinutes();
+        $schedule->command('command:sleep_update')->cron('*/20 * * * *');
+        $schedule->command('command:care_update')->cron('*/15 * * * *');
+
+        $schedule->command('command:hungry_fast_update')->cron('*/15 * * * *');
+        $schedule->command('command:sleep_fast_update')->cron('*/5 * * * *');
     }
 
     /**
