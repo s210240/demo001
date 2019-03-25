@@ -1831,22 +1831,19 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     Echo.private("pets.1").listen('.server.created', function (e) {
-      console.log(e.data);
+      _this.items = JSON.parse(e.data);
     });
     axios.get('list_pets').then(function (resp) {
       return _this.items = resp.data;
-    })
-    /*.then(function (resp) {
-        resp => (this.items = resp.data);
-        console.log(resp.data);
-    })*/
-    .catch(function (resp) {
+    }).catch(function (resp) {
       console.log(resp);
     });
     console.log(this.items);
   },
   methods: {
     addPet: function addPet() {
+      var _this2 = this;
+
       console.log(this.selected.name);
       var pet = this.selected.name;
       axios.post('add_pet', {
@@ -1855,11 +1852,22 @@ __webpack_require__.r(__webpack_exports__);
         console.log(resp);
       }).catch(function (resp) {
         console.log(resp);
-        alert("Pet already present!");
+      });
+      axios.get('list_pets').then(function (resp) {
+        return _this2.items = resp.data;
+      }).catch(function (resp) {
+        console.log(resp);
       });
     },
-    updatePet: function updatePet(id_user, type_pet) {
-      console.log(type_pet);
+    updatePet: function updatePet(id_pet, pet_action) {
+      axios.post('update_pet', {
+        id_pet: id_pet,
+        pet_action: pet_action
+      }).then(function (resp) {
+        console.log(resp);
+      }).catch(function (resp) {
+        console.log(resp);
+      });
     }
   }
 });

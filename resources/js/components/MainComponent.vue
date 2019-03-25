@@ -65,15 +65,11 @@
         mounted() {
             Echo.private(`pets.1`)
                 .listen('.server.created', (e) => {
-                    console.log(e.data);
+                    this.items = JSON.parse(e.data);
                 });
 
             axios.get('list_pets')
                 .then(resp => (this.items = resp.data))
-                /*.then(function (resp) {
-                    resp => (this.items = resp.data);
-                    console.log(resp.data);
-                })*/
                 .catch(function (resp) {
                     console.log(resp);
                 });
@@ -92,11 +88,25 @@
                     })
                     .catch(function (resp) {
                         console.log(resp);
-                        alert("Pet already present!");
+                    });
+
+                axios.get('list_pets')
+                    .then(resp => (this.items = resp.data))
+                    .catch(function (resp) {
+                        console.log(resp);
                     });
             },
-            updatePet(id_user, type_pet) {
-                console.log(type_pet);
+            updatePet(id_pet, pet_action) {
+                axios.post('update_pet', {
+                    id_pet: id_pet,
+                    pet_action: pet_action
+                })
+                    .then(function (resp) {
+                        console.log(resp);
+                    })
+                    .catch(function (resp) {
+                        console.log(resp);
+                    });
             }
         }
     }

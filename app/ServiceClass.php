@@ -16,8 +16,8 @@ class ServiceClass
     {
         $users = User::all();
         foreach ($users as $user) {
-            $pets = PetsModel::select(['id', 'pet_type', 'hunger', 'sleep', 'care'])->where('id_user', $user->id)->get();
-            event(new UpdatePets($pets->toJson(JSON_PRETTY_PRINT), $user->id));
+            $pets = PetsModel::select(['id', 'pet_type', 'hunger', 'sleep', 'care'])->where('id_user', $user->id)->get()->toJson();
+            event(new UpdatePets($pets, $user->id));
         }
     }
 }

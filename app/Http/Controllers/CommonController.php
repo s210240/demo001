@@ -6,28 +6,61 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\PetsModel;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class CommonController extends Controller
 {
-    public function hungry(Request $request)
+
+    public function updatePet(Request $request)
     {
-        $id_pet = $request->id;
+        if (Auth::check()) {
+            try {
+                $id_pet = $request->id_pet;
+                $pet_action = $request->pet_action;
 
-    }
+                switch ($pet_action) {
+                    case 1: // hunger
+                        $check = DB::select('SELECT COUNT(*) AS result FROM pets WHERE id = ? AND `hunger_time` <  (now()- interval 5 minute)', [$id_pet]);
+                        if ($check[0]->result == 0) {
+                            PetsModel::where('id', $id_pet)
+                                ->update([
+                                    'hunger' => DB::raw('hunger+1'),
+                                    'hunger_time' => Carbon::now()
+                                ]);
+                        }
+                        break;
+                    case 2: // sleep
+                        $check = DB::select('SELECT COUNT(*) AS result FROM pets WHERE id = ? AND `sleep_time` <  (now()- interval 10 minute)', [$id_pet]);
+                        if ($check[0]->result == 0) {
+                            PetsModel::where('id', $id_pet)
+                                ->update([
+                                    'sleep' => DB::raw('sleep+1'),
+                                    'sleep_time' => Carbon::now()
+                                ]);
+                        }
+                        break;
+                    case 3: //care
+                        $check = DB::select('SELECT COUNT(*) AS result FROM pets WHERE id = ? AND `care_time` <  (now()- interval 5 minute)', [$id_pet]);
+                        if ($check[0]->result == 0) {
+                            PetsModel::where('id', $id_pet)
+                                ->update([
+                                    'care' => DB::raw('care+1'),
+                                    'care_time' => Carbon::now()
+                                ]);
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-    public function sleep(Request $request)
-    {
-
-    }
-
-    public function care(Request $request)
-    {
-
-    }
-
-    public function fun(Request $request)
-    {
-
+            } catch (\Exception $e) {
+                Log::error('Pets update error');
+            }
+        } else {
+            echo "auth_error";
+        }
     }
 
     public function addPet(Request $request)
