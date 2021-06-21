@@ -14,17 +14,17 @@
         "bootstrap": "^4.5.3",
         "cross-env": "^5.2.1",
         "jquery": "^3.5.1",
-        "laravel-mix": "^6.0.19",
+        "laravel-mix": "^6.0.24",
         "lodash": "^4.17.20",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^4.0.0",
-        "sass": "^1.34.0",
+        "sass": "^1.35.1",
         "sass-loader": "^7.3.1",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "laravel-echo": "^1.10.0",
+        "laravel-echo": "^1.11.0",
         "pusher-js": "^4.4.0",
         "socket.io-client": "^2.3.1"
     }
